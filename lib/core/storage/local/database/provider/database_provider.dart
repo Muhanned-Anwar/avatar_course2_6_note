@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:avatar_course2_6_note/core/constants.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
