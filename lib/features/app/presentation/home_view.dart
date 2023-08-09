@@ -11,33 +11,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> names = [
-      'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead' 'ahmed',
-      'mohammed',
-      'malak',
-      'zead'
-    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ManagerColors.transparent,
@@ -67,8 +40,13 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ),
-        child: ListView.builder(
-          itemCount: names.length, // 25
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
+          ),
+          itemCount: 100000,
           itemBuilder: (context, index) {
             return Card(
               color: ManagerColors.primaryColor,
@@ -77,10 +55,7 @@ class HomeView extends StatelessWidget {
                   ManagerRadius.r12,
                 ),
               ),
-              child: Container(
-                height: 100,
-                child: Text('data ${names[index]} $index'),
-              ),
+              child: Text('$index'),
             );
           },
         ),
