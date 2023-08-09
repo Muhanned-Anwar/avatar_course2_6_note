@@ -69,7 +69,9 @@ class HomeView extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            for (int i = 0; i < names.length; i++)
+          ...List.generate(
+              names.length, // 20
+              (index) => // 0 - 19
               Card(
                 color: ManagerColors.primaryColor,
                 shape: RoundedRectangleBorder(
@@ -79,9 +81,10 @@ class HomeView extends StatelessWidget {
                 ),
                 child: Container(
                   height: 50,
-                  child: Text('data ${names[i]}'),
+                  child: Text('data ${names[index]}'),
                 ),
               ),
+          )
           ],
         ),
       ),
