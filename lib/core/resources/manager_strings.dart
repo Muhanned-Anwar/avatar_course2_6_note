@@ -1,5 +1,6 @@
 class ManagerStrings {
   static const String appName = 'NotePad App';
+  static const String addNoteView = 'Add Note View';
   static const String outBoardingTitle1 = 'Title One';
   static const String outBoardingTitle2 = 'Title Two';
   static const String outBoardingTitle3 = 'Title Three';
