@@ -3,7 +3,7 @@ import 'package:avatar_course2_6_note/core/resources/manager_font_sizes.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants.dart';
 import '../../../../core/resources/manager_strings.dart';
-import '../../../../core/routes.dart';
+import '../../../../routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
