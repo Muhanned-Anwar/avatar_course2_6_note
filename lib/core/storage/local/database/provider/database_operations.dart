@@ -8,8 +8,8 @@ abstract class DatabaseOperations<T> {
 
   Future<T?> show(int id);
 
-  // updateT object);
-  Future<bool> update();
+  // update(T object);
+  Future<bool> update(T object);
 
   // delete
   Future<bool> delete(int id);
