@@ -37,12 +37,13 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
           ManagerColors.primaryColor,
-          ManagerColors.white,
+          ManagerColors.secondaryColor,
         ])),
-        child: const Text(
+        child: Text(
           ManagerStrings.appName,
           style: TextStyle(
             fontSize: ManagerFontSizes.s26,
+            color: ManagerColors.white,
           ),
         ),
       ),
