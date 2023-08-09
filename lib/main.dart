@@ -1,7 +1,5 @@
-import 'package:avatar_course2_6_note/core/storage/local/database/database_provider.dart';
 import 'package:avatar_course2_6_note/features/app/presentation/home_view.dart';
 import 'package:flutter/material.dart';
-
 import 'config/dependancy_injection.dart';
 import 'core/routes.dart';
 import 'features/splash/presentation/view/splash_screen.dart';
