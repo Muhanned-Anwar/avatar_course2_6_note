@@ -67,25 +67,22 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ),
-        child: ListView(
-          children: [
-          ...List.generate(
-              names.length, // 20
-              (index) => // 0 - 19
-              Card(
-                color: ManagerColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    ManagerRadius.r12,
-                  ),
-                ),
-                child: Container(
-                  height: 50,
-                  child: Text('data ${names[index]}'),
+        child: ListView.builder(
+          itemCount: names.length, // 25
+          itemBuilder: (context, index) {
+            return Card(
+              color: ManagerColors.primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  ManagerRadius.r12,
                 ),
               ),
-          )
-          ],
+              child: Container(
+                height: 100,
+                child: Text('data ${names[index]} $index'),
+              ),
+            );
+          },
         ),
       ),
     );
