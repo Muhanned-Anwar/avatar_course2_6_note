@@ -1,4 +1,5 @@
 import 'package:avatar_course2_6_note/core/constants.dart';
+import 'package:avatar_course2_6_note/core/extension/extensions.dart';
 import 'package:avatar_course2_6_note/core/storage/local/database/model/note.dart';
 import 'package:avatar_course2_6_note/core/storage/local/database/provider/database_operations.dart';
 import 'package:avatar_course2_6_note/core/storage/local/database/provider/database_provider.dart';
@@ -41,14 +42,43 @@ class NoteDatabaseController extends DatabaseOperations<Note> {
   }
 
   @override
-  Future<Note?> show(int id) {
-    // TODO: implement show
-    throw UnimplementedError();
+  Future<Note?> show(int id) async {
+    List<Map<String, Object?>> data = await database.query(
+      Constants.databaseNotesTableName,
+      where: '${Constants.databaseNotesIdColumnName} = ?',
+      whereArgs: [id],
+    );
+    if (data.isNotEmpty) {
+      return Note.fromMap(data.first);
+    }
+
+    return null;
+  }
+
+  Future<List<Note>?> searchByNameOrId(int? id, String? content) async {
+    List<Map<String, Object?>> data = await database.query(
+      Constants.databaseNotesTableName,
+      where:
+          '${Constants.databaseNotesIdColumnName} = ? or ${Constants.databaseNotesContentColumnName} = ?',
+      whereArgs: [id.onNull(), content.onNull()],
+    );
+
+    if (data.isNotEmpty) {
+      return data.map((row) => Note.fromMap(row)).toList();
+    }
+
+    return null;
   }
 
   @override
-  Future<bool> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<bool> update(Note object) async {
+    int countOfRowsUpdated = await database.update(
+      Constants.databaseNotesTableName,
+      object.toMap(),
+      where: '${Constants.databaseNotesIdColumnName} = ?',
+      whereArgs: [object.id]
+    );
+
+    return countOfRowsUpdated > 0;
   }
 }
