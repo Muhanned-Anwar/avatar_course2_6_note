@@ -18,18 +18,21 @@ class AddNoteView extends StatefulWidget {
 }
 
 class _AddNoteViewState extends State<AddNoteView> {
-  late TextEditingController _textEditingController;
+  late TextEditingController _contentTextEditingController;
+  late TextEditingController _titleTextEditingController;
   final HomeController _controller = Get.find<HomeController>();
 
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
+    _contentTextEditingController = TextEditingController();
+    _titleTextEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _contentTextEditingController.dispose();
+    _titleTextEditingController.dispose();
     super.dispose();
   }
 
@@ -71,7 +74,21 @@ class _AddNoteViewState extends State<AddNoteView> {
               child: Column(
                 children: [
                   TextField(
-                    controller: _textEditingController,
+                    controller: _titleTextEditingController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Add Title Note',
+                      hintStyle: TextStyle(
+                        fontSize: ManagerFontSizes.s14,
+                        color: ManagerColors.secondaryColor,
+                      ),
+                    ),
+                    minLines: 1,
+                    maxLines: 10,
+                  ),
+                  const SizedBox(height: ManagerHeight.h10),
+                  TextField(
+                    controller: _contentTextEditingController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Add Content Note',
@@ -112,7 +129,7 @@ class _AddNoteViewState extends State<AddNoteView> {
   }
 
   bool checkData() {
-    if (_textEditingController.text.isNotEmpty) {
+    if (_contentTextEditingController.text.isNotEmpty && _titleTextEditingController.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -120,7 +137,8 @@ class _AddNoteViewState extends State<AddNoteView> {
 
   Future<void> save() async {
     Note note = Note();
-    note.content = _textEditingController.text.toString();
+    note.title = _titleTextEditingController.text.toString();
+    note.content = _contentTextEditingController.text.toString();
     bool created = await _controller.create(note: note);
     if(created){
       print('Success');
