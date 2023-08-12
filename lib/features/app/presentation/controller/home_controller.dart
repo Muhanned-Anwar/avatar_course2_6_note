@@ -7,8 +7,15 @@ class HomeController extends GetxController {
   final NoteDatabaseController _noteDatabaseController =
       NoteDatabaseController();
 
+  Note currentNote = Note.fillData(id: 0, title: '', content: '');
+
   Future<void> read() async {
     notes = await _noteDatabaseController.read();
+    update();
+  }
+
+  Future<void> show(int noteId) async {
+    currentNote = await _noteDatabaseController.show(noteId) ?? Note();
     update();
   }
 
@@ -21,6 +28,21 @@ class HomeController extends GetxController {
     }
 
     return id != 0;
+  }
+
+  Future<bool> updateNote({required Note updatedNote}) async {
+    bool updated = await _noteDatabaseController.update(updatedNote);
+    if (updated) {
+      for (int i = 0; i < notes.length; i++) {
+        if (notes[i].id == updatedNote.id) {
+          update();
+          notes[i] = updatedNote;
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   @override
