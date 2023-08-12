@@ -7,6 +7,7 @@ import '../../../../core/resources/manager_colors.dart';
 import '../../../../core/resources/manager_font_sizes.dart';
 import '../../../../core/resources/manager_height.dart';
 import '../../../../core/resources/manager_width.dart';
+import '../../../../core/widgets/helpers.dart';
 import '../controller/home_controller.dart';
 
 class NoteDetailsView extends StatefulWidget {
@@ -16,20 +17,23 @@ class NoteDetailsView extends StatefulWidget {
   State<NoteDetailsView> createState() => _NoteDetailsViewState();
 }
 
-class _NoteDetailsViewState extends State<NoteDetailsView> {
-  late TextEditingController _textEditingController;
+class _NoteDetailsViewState extends State<NoteDetailsView> with Helpers {
+  late TextEditingController _titleTextEditingController;
+  late TextEditingController _contentTextEditingController;
   final HomeController _controller = Get.find<HomeController>();
   late int noteId;
 
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
+    _titleTextEditingController = TextEditingController();
+    _contentTextEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _titleTextEditingController.dispose();
+    _contentTextEditingController.dispose();
     super.dispose();
   }
 
@@ -50,7 +54,7 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
           backgroundColor: ManagerColors.transparent,
           elevation: Constants.appBarElevation,
           title: Text(
-            'Note $noteId ${controller.currentNote.title}',
+            controller.currentNote.title,
             style: TextStyle(
               fontSize: ManagerFontSizes.s20,
               color: ManagerColors.white,
@@ -94,21 +98,27 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
               end: ManagerWidth.w16,
             ),
             height: double.infinity,
-            child: TextField(
-                controller: _textEditingController
-                  ..text = controller.currentNote.content,
-              enabled: true,
-              style: TextStyle(color: Colors.white),
-              minLines: 1,
-              maxLines: 50,
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide.none,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Title'),
+                TextField(
+                    controller: _titleTextEditingController,
+                  enabled: true,
+                  style: const TextStyle(color: Colors.white),
+                  minLines: 1,
+                  maxLines: 1,
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide.none,
+                SizedBox(height: ManagerHeight.h16),
+                Text('Content'),
+                TextField(
+                    controller: _contentTextEditingController,
+                  enabled: true,
+                  style: const TextStyle(color: Colors.white),
+                  minLines: 1,
+                  maxLines: 20,
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -123,16 +133,19 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
   }
 
   bool checkData() {
-    if (_textEditingController.text.isNotEmpty) {
-      return true;
-    }
-
-    return false;
+    return _titleTextEditingController.text.isNotEmpty && _contentTextEditingController.text.isNotEmpty;
   }
 
-  update() {
+  update() async {
     Note note = _controller.currentNote;
-    note.content = _textEditingController.text;
-    _controller.updateNote(updatedNote: note);
+    note.title = _titleTextEditingController.text;
+    note.content = _contentTextEditingController.text;
+    bool updated = await _controller.updateNote(updatedNote: note);
+    if (updated) {
+      showSnackBar(context: context, message: 'Updated Note Successfully');
+    } else {
+      showSnackBar(
+          context: context, message: 'Updated Note Field', error: true);
+    }
   }
 }
