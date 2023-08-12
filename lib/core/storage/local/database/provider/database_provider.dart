@@ -28,7 +28,9 @@ class DatabaseProvider {
         database.execute('CREATE TABLE '
             '${Constants.databaseNotesTableName}('
             '${Constants.databaseNotesIdColumnName} INTEGER PRIMARY KEY AUTOINCREMENT,'
-            '${Constants.databaseNotesContentColumnName} TEXT)');
+            '${Constants.databaseNotesContentColumnName} TEXT,'
+            '${Constants.databaseNotesTitleColumnName} TEXT'
+            ')');
       },
       onOpen: (database) {},
       onUpgrade: (database, oldVersion, newVersion) {},
