@@ -78,7 +78,8 @@ class _HomeViewState extends State<HomeView> {
                   onTap: () {
                     Navigator.pushNamed(context, Routes.noteDetailsView,
                         arguments: {
-                          Constants.databaseNotesIdColumnName: controller.notes[index].id,
+                          Constants.databaseNotesIdColumnName:
+                              controller.notes[index].id,
                         });
                   },
                   child: Card(
@@ -88,20 +89,36 @@ class _HomeViewState extends State<HomeView> {
                         ManagerRadius.r12,
                       ),
                     ),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: ManagerWidth.w8,
-                        vertical: ManagerHeight.h14,
-                      ),
-                      child: Text(
-                        controller.notes[index].content,
-                        style: TextStyle(
-                          color: ManagerColors.white,
-                          fontSize: ManagerFontSizes.s16,
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: ManagerWidth.w8,
+                            vertical: ManagerHeight.h14,
+                          ),
+                          child: Text(
+                            controller.notes[index].content,
+                            style: TextStyle(
+                              color: ManagerColors.white,
+                              fontSize: ManagerFontSizes.s16,
+                            ),
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        maxLines: 6,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                        Container(
+                          alignment: AlignmentDirectional.topEnd,
+                          child: IconButton(
+                            onPressed: () {
+                              controller.delete(controller.notes[index].id, context);
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: ManagerColors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );

@@ -1,8 +1,10 @@
 import 'package:avatar_course2_6_note/core/storage/local/database/controller/note_database_controller.dart';
+import 'package:avatar_course2_6_note/core/widgets/helpers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../core/storage/local/database/model/note.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with Helpers {
   List<Note> notes = [];
   final NoteDatabaseController _noteDatabaseController =
       NoteDatabaseController();
@@ -44,6 +46,21 @@ class HomeController extends GetxController {
     }
 
     return false;
+  }
+
+  Future<void> delete(int id, BuildContext context) async {
+    if (await _noteDatabaseController.delete(id)) {
+      for (int i = 0; i < notes.length; i++) {
+        if (notes[i].id == id) {
+          notes.removeAt(i);
+          update();
+          showSnackBar(context: context, message: 'Deleted Note Successfully');
+        }
+      }
+    } else {
+      showSnackBar(
+          context: context, message: 'Deleted Note Field', error: true);
+    }
   }
 
   @override
