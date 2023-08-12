@@ -11,6 +11,7 @@ class HomeController extends GetxController {
 
   Future<void> read() async {
     notes = await _noteDatabaseController.read();
+    notes = notes.reversed.toList();
     update();
   }
 
