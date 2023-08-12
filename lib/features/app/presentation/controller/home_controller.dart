@@ -50,13 +50,15 @@ class HomeController extends GetxController with Helpers {
 
   Future<void> delete(int id, BuildContext context) async {
     if (await _noteDatabaseController.delete(id)) {
-      for (int i = 0; i < notes.length; i++) {
-        if (notes[i].id == id) {
-          notes.removeAt(i);
-          update();
-          showSnackBar(context: context, message: 'Deleted Note Successfully');
-        }
-      }
+      // for (int i = 0; i < notes.length; i++) {
+      //   if (notes[i].id == id) {
+      //     notes.removeAt(i);
+      //     update();
+      //     showSnackBar(context: context, message: 'Deleted Note Successfully');
+      //   }
+      // }
+      read();
+      showSnackBar(context: context, message: 'Deleted Note Successfully');
     } else {
       showSnackBar(
           context: context, message: 'Deleted Note Field', error: true);
