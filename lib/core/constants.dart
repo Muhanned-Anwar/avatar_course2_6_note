@@ -11,5 +11,6 @@ class Constants {
   static const int databaseFirstVersion = 1;
   static const String databaseNotesTableName = 'notes';
   static const String databaseNotesIdColumnName = 'id';
+  static const String databaseNotesTitleColumnName = 'title';
   static const String databaseNotesContentColumnName = 'content';
 }
