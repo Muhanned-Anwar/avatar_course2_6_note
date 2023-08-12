@@ -2,6 +2,7 @@ import 'package:avatar_course2_6_note/features/app/presentation/view/add_note_vi
 import 'package:avatar_course2_6_note/features/app/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'config/dependancy_injection.dart';
+import 'features/app/presentation/view/note_details_view.dart';
 import 'routes/routes.dart';
 import 'features/splash/presentation/view/splash_screen.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         Routes.splashScreen: (context) => const SplashScreen(),
         Routes.homeView: (context) => const HomeView(),
         Routes.addNoteView: (context) => const AddNoteView(),
+        Routes.noteDetailsView: (context) => const NoteDetailsView(),
       },
     );
   }

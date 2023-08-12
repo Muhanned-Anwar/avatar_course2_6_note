@@ -1,3 +1,4 @@
+import 'package:avatar_course2_6_note/core/constants.dart';
 import 'package:avatar_course2_6_note/core/resources/manager_colors.dart';
 import 'package:avatar_course2_6_note/core/resources/manager_font_sizes.dart';
 import 'package:avatar_course2_6_note/core/resources/manager_height.dart';
@@ -73,26 +74,34 @@ class _HomeViewState extends State<HomeView> {
               ),
               itemCount: controller.notes.length,
               itemBuilder: (context, index) {
-                return Card(
-                  color: ManagerColors.primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      ManagerRadius.r12,
-                    ),
-                  ),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: ManagerWidth.w8,
-                      vertical: ManagerHeight.h14,
-                    ),
-                    child: Text(
-                      controller.notes[index].content,
-                      style: TextStyle(
-                        color: ManagerColors.white,
-                        fontSize: ManagerFontSizes.s16,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.noteDetailsView,
+                        arguments: {
+                          Constants.databaseNotesIdColumnName: controller.notes[index].id,
+                        });
+                  },
+                  child: Card(
+                    color: ManagerColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        ManagerRadius.r12,
                       ),
-                      maxLines: 6,
-                      overflow: TextOverflow.ellipsis,
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: ManagerWidth.w8,
+                        vertical: ManagerHeight.h14,
+                      ),
+                      child: Text(
+                        controller.notes[index].content,
+                        style: TextStyle(
+                          color: ManagerColors.white,
+                          fontSize: ManagerFontSizes.s16,
+                        ),
+                        maxLines: 6,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 );

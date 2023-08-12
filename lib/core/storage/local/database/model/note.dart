@@ -2,9 +2,16 @@ import 'package:avatar_course2_6_note/core/constants.dart';
 
 class Note {
   late int id;
+  late String title;
   late String content;
 
   Note();
+
+  Note.fillData({
+    required this.id,
+    required this.title,
+    required this.content,
+  });
 
   // read
   /*
@@ -20,6 +27,7 @@ class Note {
   Note.fromMap(Map<String, dynamic> map) {
     id = map[Constants.databaseNotesIdColumnName];
     content = map[Constants.databaseNotesContentColumnName];
+    title = map[Constants.databaseNotesTitleColumnName];
   }
 
   // write
@@ -55,6 +63,7 @@ class Note {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       Constants.databaseNotesContentColumnName: content,
+      Constants.databaseNotesTitleColumnName: title,
     };
   }
 }
