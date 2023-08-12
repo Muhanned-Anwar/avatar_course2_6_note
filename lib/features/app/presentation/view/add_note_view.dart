@@ -1,4 +1,5 @@
 import 'package:avatar_course2_6_note/core/storage/local/database/model/note.dart';
+import 'package:avatar_course2_6_note/core/widgets/helpers.dart';
 import 'package:avatar_course2_6_note/features/app/presentation/controller/home_controller.dart';
 import 'package:avatar_course2_6_note/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class AddNoteView extends StatefulWidget {
   State<AddNoteView> createState() => _AddNoteViewState();
 }
 
-class _AddNoteViewState extends State<AddNoteView> {
+class _AddNoteViewState extends State<AddNoteView> with Helpers {
   late TextEditingController _contentTextEditingController;
   late TextEditingController _titleTextEditingController;
   final HomeController _controller = Get.find<HomeController>();
@@ -123,13 +124,14 @@ class _AddNoteViewState extends State<AddNoteView> {
   }
 
   Future<void> performCreateNote() async {
-    if(checkData()){
+    if (checkData()) {
       save();
     }
   }
 
   bool checkData() {
-    if (_contentTextEditingController.text.isNotEmpty && _titleTextEditingController.text.isNotEmpty) {
+    if (_contentTextEditingController.text.isNotEmpty &&
+        _titleTextEditingController.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -140,11 +142,12 @@ class _AddNoteViewState extends State<AddNoteView> {
     note.title = _titleTextEditingController.text.toString();
     note.content = _contentTextEditingController.text.toString();
     bool created = await _controller.create(note: note);
-    if(created){
-      print('Success');
+    if (created) {
+      showSnackBar(context: context, message: 'Added Note Successfully');
       Navigator.pushReplacementNamed(context, Routes.homeView);
-    }else{
-      print('Faild');
+    } else {
+      showSnackBar(
+          context: context, message: 'Updated Note Field', error: true);
     }
   }
 }
